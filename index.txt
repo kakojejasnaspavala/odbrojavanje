@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Buđenje iz vizije</title>
+<meta name="description" content="Vizija je bila jasna. Šteta što je nitko nije vidio. Odbrojavamo do buđenja: 8.11. zaokružite 3.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kakojejasnaspavala.github.io/odbrojavanje/">
+<meta property="og:title" content="Buđenje iz vizije">
+<meta property="og:description" content="Vizija je bila jasna. Šteta što je nitko nije vidio. Odbrojavamo do buđenja: 8.11. zaokružite 3.">
+<meta property="og:image" content="https://kakojejasnaspavala.github.io/odbrojavanje/thumbnail.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Buđenje iz vizije">
+<meta name="twitter:description" content="Vizija je bila jasna. Šteta što je nitko nije vidio. Odbrojavamo do buđenja: 8.11. zaokružite 3.">
+<meta name="twitter:image" content="https://kakojejasnaspavala.github.io/odbrojavanje/thumbnail.png">
+<link rel="icon" href="thumbnail.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Familjen+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: jedna scena — naslov, četiri velike pločice, ispod rotirajuća poruka i veliki "3" u krugu. */
+:root{
+  --bg:#f3eefb; --ink:#2a1840; --muted:#6c5a86; --tile:#2a1840; --tile-fg:#fff6e8;
+  --pop:#ff7a2f; --mint:#3fc9a5; --line:#ddd2ee; --card:#ffffff;
+  --display:"Bowlby One","Arial Black",Impact,sans-serif;
+  --body:"Familjen Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#170e24; --ink:#f4ecff; --muted:#a998c4; --tile:#fff6e8; --tile-fg:#2a1840;
+  --pop:#ff8f4d; --mint:#52dbb6; --line:#34254a; --card:#21152f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#170e24; --ink:#f4ecff; --muted:#a998c4; --tile:#fff6e8; --tile-fg:#2a1840;
+  --pop:#ff8f4d; --mint:#52dbb6; --line:#34254a; --card:#21152f; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:32px 48px;overflow-x:hidden}
+main{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,7vw,64px);line-height:1.05;margin:6px 0 0;text-wrap:balance}
+h1 .wiggle{display:inline-block;color:var(--pop);animation:wig 2.4s ease-in-out infinite}
+@keyframes wig{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(5deg)}}
+.date{margin-top:10px;color:var(--muted);font-weight:600}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.unit{display:flex;flex-direction:column;align-items:center;gap:10px}
+.tile{width:100%;aspect-ratio:1/1.05;max-width:100%;background:var(--tile);color:var(--tile-fg);border-radius:18px;
+  display:grid;place-items:center;position:relative;cursor:pointer;border:0;
+  font-family:var(--display);font-size:clamp(34px,10vw,88px);font-variant-numeric:tabular-nums;
+  box-shadow:0 6px 0 var(--pop);transition:transform .15s}
+.tile::after{content:"";position:absolute;left:8%;right:8%;top:50%;height:2px;background:var(--bg);opacity:.35}
+.tile:active{transform:translateY(4px);box-shadow:0 2px 0 var(--pop)}
+.tile:focus-visible,.btn:focus-visible{outline:3px solid var(--mint);outline-offset:4px}
+.tile.flip span{animation:flip .35s ease}
+@keyframes flip{0%{transform:translateY(-30%);opacity:0}100%{transform:none;opacity:1}}
+.tile.jig{animation:jig .5s}
+@keyframes jig{25%{transform:rotate(-6deg) scale(1.05)}50%{transform:rotate(5deg)}75%{transform:rotate(-2deg)}}
+.label{font-weight:700;font-size:15px}
+.done{display:none;text-align:center;font-family:var(--display);font-size:clamp(30px,7vw,56px);color:var(--pop);line-height:1.1;text-wrap:balance}
+.is-done .board{display:none}.is-done .done{display:block}
+.msg{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:24px;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center}
+.three{width:96px;height:96px;border-radius:50%;border:5px solid var(--pop);display:grid;place-items:center;
+  font-family:var(--display);font-size:56px;line-height:1;color:var(--ink);transform:rotate(-8deg);cursor:pointer;background:transparent}
+.three:hover{transform:rotate(4deg) scale(1.05)}
+.quip{font-size:clamp(19px,3.4vw,24px);font-weight:700;line-height:1.3;min-width:0;text-wrap:balance}
+.quip.fade{animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.quip b{color:var(--pop)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.btn{font:700 16px var(--body);padding:11px 18px;border-radius:12px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.btn.hot{background:var(--pop);border-color:var(--pop);color:#2a1840}
+.small{font-size:14px;color:var(--muted);margin:0}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
+@media (max-width:520px){.board{gap:8px}.tile{border-radius:12px;box-shadow:0 4px 0 var(--pop)}.label{font-size:13px}
+  .msg{grid-template-columns:1fr;justify-items:start;padding:20px}.three{width:76px;height:76px;font-size:44px}}
+@media (prefers-reduced-motion:reduce){h1 .wiggle,.tile.flip span,.tile.jig,.quip.fade{animation:none}}
+</style>
+
+</head>
+<body>
+<canvas id="fx"></canvas>
+<main id="app">
+  <header>
+    <div class="eyebrow">Odbrojavanje do izbora</div>
+    <h1>Buđenje iz vizije <span class="wiggle">8.11.</span></h1>
+    <div class="date">Nedjelja, 8.11.2026. Birališta otvaraju u 07:00.</div>
+  </header>
+
+  <section aria-live="polite">
+    <div class="board">
+      <div class="unit"><button class="tile" id="t-d" aria-label="dani"><span>0</span></button><div class="label" id="l-d">dana</div></div>
+      <div class="unit"><button class="tile" id="t-h" aria-label="sati"><span>00</span></button><div class="label" id="l-h">sati</div></div>
+      <div class="unit"><button class="tile" id="t-m" aria-label="minute"><span>00</span></button><div class="label" id="l-m">minuta</div></div>
+      <div class="unit"><button class="tile" id="t-s" aria-label="sekunde"><span>00</span></button><div class="label" id="l-s">sekundi</div></div>
+    </div>
+    <div class="done">Danas je dan! Izađi i zaokruži 3.</div>
+  </section>
+
+  <section class="msg">
+    <button class="three" id="three" aria-label="Nova poruka">3</button>
+    <p class="quip" id="quip"></p>
+  </section>
+
+  <div class="row">
+    <p class="small">Tapni pločicu ili trojku za novu poruku.</p>
+    <button class="btn hot" id="party" type="button">Zaokruži 3 🎉</button>
+  </div>
+</main>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const TARGET=new Date("2026-11-08T07:00:00+01:00");
+
+function pl(n,f){const a=n%10,b=n%100;if(a===1&&b!==11)return f[0];if(a>=2&&a<=4&&(b<12||b>14))return f[1];return f[2]}
+const F={d:["dan","dana","dana"],h:["sat","sata","sati"],m:["minuta","minute","minuta"],s:["sekunda","sekunde","sekundi"]};
+
+const msgs=[
+  d=>`Još <b>${d}</b> ${pl(d,F.d)} do buđenja iz vizije.`,
+  ()=>`Vizija bez naočala nije vizija, nego magla. <b>Zaokružite 3.</b>`,
+  ()=>`Vizije su za snove. Izbori su za stvarnost.`,
+  ()=>`Lijepo je sanjati. Još je ljepše glasati. <b>Zaokružite 3.</b>`,
+  ()=>`Kad se vizija zamuti, pomaže svjež pogled.`,
+  ()=>`Nekima je vizija samo ime. Nama je plan.`,
+  ()=>`Probudite se, 8.11. nije san. <b>Zaokružite 3.</b>`,
+  ()=>`Dobro jutro, vizijo. Vrijeme je za ustajanje.`,
+];
+let qi=0;
+function renderQuip(anim){
+  const s=Math.max(0,(TARGET-new Date())/1000),d=Math.floor(s/86400);
+  const q=$("quip");
+  q.innerHTML=s<=0?"Birališta su otvorena. <b>Zaokružite 3.</b>":(d<1&&qi%msgs.length===0)?"Još samo nekoliko sati. Budilica je navijena!":msgs[qi%msgs.length](d);
+  if(anim){q.classList.remove("fade");void q.offsetWidth;q.classList.add("fade")}
+}
+function next(){qi++;renderQuip(true)}
+
+const last={};
+function setTile(k,v,n){const el=$("t-"+k);if(last[k]!==v){last[k]=v;el.querySelector("span").textContent=v;el.classList.remove("flip");void el.offsetWidth;el.classList.add("flip")}$("l-"+k).textContent=pl(n,F[k])}
+let celebrated=false;
+function tick(){
+  const diff=TARGET-new Date();
+  if(diff<=0){$("app").classList.add("is-done");if(!celebrated){celebrated=true;confetti(220);renderQuip()}return}
+  const s=Math.floor(diff/1000),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),se=s%60;
+  setTile("d",String(d),d);setTile("h",String(h).padStart(2,"0"),h);setTile("m",String(m).padStart(2,"0"),m);setTile("s",String(se).padStart(2,"0"),se);
+}
+
+document.querySelectorAll(".tile").forEach(t=>t.addEventListener("click",()=>{t.classList.remove("jig");void t.offsetWidth;t.classList.add("jig");next();confetti(25,t)}));
+$("three").onclick=e=>{next();confetti(40,e.currentTarget)};
+$("party").onclick=()=>confetti(160);
+
+const cv=$("fx"),cx=cv.getContext("2d");let parts=[],raf=null;
+function size(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio}size();addEventListener("resize",size);
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function confetti(n,el){if(reduce)return;const r=el?el.getBoundingClientRect():null;
+  const ox=r?r.left+r.width/2:innerWidth/2,oy=r?r.top+r.height/2:innerHeight*0.35;const cols=["#ff7a2f","#3fc9a5","#b892ff","#ffd23f","#ff5d8f"];
+  for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,sp=3+Math.random()*7;parts.push({x:ox,y:oy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-4,w:6+Math.random()*6,h:4+Math.random()*4,r:Math.random()*6,vr:(Math.random()-.5)*.3,c:cols[i%cols.length],life:120+Math.random()*60})}
+  if(!raf)raf=requestAnimationFrame(step)}
+function step(){const k=devicePixelRatio;cx.clearRect(0,0,cv.width,cv.height);
+  parts=parts.filter(p=>p.life-->0&&p.y<innerHeight+40);
+  for(const p of parts){p.vy+=.18;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;cx.save();cx.translate(p.x*k,p.y*k);cx.rotate(p.r);cx.fillStyle=p.c;cx.globalAlpha=Math.min(1,p.life/40);cx.fillRect(-p.w*k/2,-p.h*k/2,p.w*k,p.h*k);cx.restore()}
+  raf=parts.length?requestAnimationFrame(step):null}
+
+renderQuip();tick();setInterval(tick,1000);setInterval(next,8000);
+})();
+</script>
+
+</body>
+</html>
