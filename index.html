@@ -92,9 +92,9 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
 <canvas id="fx"></canvas>
 <main id="app">
   <header>
-    <div class="eyebrow">Odbrojavanje do izbora</div>
+    <div class="eyebrow" id="eyebrow">Odbrojavanje do izbora</div>
     <h1><span class="a">SVE PO</span><span class="b">PLANU</span></h1>
-    <div class="date">Nedjelja, <span>8.11.2026.</span> Birališta otvaraju u 07:00.</div>
+    <div class="date" id="date">Nedjelja, <span>8.11.2026.</span> Birališta otvaraju u 07:00.</div>
   </header>
 
   <section aria-live="polite" style="width:100%">
@@ -104,7 +104,7 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
       <div class="unit"><button class="tile" id="t-m" aria-label="minute"><span>00</span></button><div class="label" id="l-m">minuta</div></div>
       <div class="unit"><button class="tile" id="t-s" aria-label="sekunde"><span>00</span></button><div class="label" id="l-s">sekundi</div></div>
     </div>
-    <div class="done">Danas je dan. Zaokružite 3.</div>
+    <div class="done" id="done">Birališta su otvorena. Zaokružite 3.</div>
   </section>
 
   <section class="msg">
@@ -134,7 +134,7 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
 <script>
 (function(){
 const $=id=>document.getElementById(id);
-const TARGET=new Date("2026-11-08T07:00:00+01:00");
+const TARGET=new Date("2026-11-08T07:00:00+01:00"),CLOSE=new Date("2026-11-08T20:00:00+01:00");
 function pl(n,f){const a=n%10,b=n%100;if(a===1&&b!==11)return f[0];if(a>=2&&a<=4&&(b<12||b>14))return f[1];return f[2]}
 const F={d:["dan","dana","dana"],h:["sat","sata","sati"],m:["minuta","minute","minuta"],s:["sekunda","sekunde","sekundi"]};
 
@@ -154,8 +154,8 @@ const msgs=[
 ];
 let qi=0;
 function renderQuip(anim){
-  const s=Math.max(0,(TARGET-new Date())/1000),d=Math.floor(s/86400),q=$("quip");
-  q.innerHTML=s<=0?"Birališta su otvorena. <em>Zaokružite 3.</em>":(d<1&&qi%msgs.length===0)?"Još samo nekoliko sati. <em>Sve po planu.</em>":msgs[qi%msgs.length](d);
+  const s=Math.max(0,(TARGET-new Date())/1000),n=new Date(),d=Math.round((new Date(2026,10,8)-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/86400000),q=$("quip");
+  q.innerHTML=n>=CLOSE?"Birališta su zatvorena. <em>Hvala vam.</em>":s<=0?"Birališta su otvorena do 20:00. <em>Zaokružite 3.</em>":(d<1&&qi%msgs.length===0)?"Još samo nekoliko sati. <em>Sve po planu.</em>":msgs[qi%msgs.length](d);
   if(anim){q.classList.remove("fade");void q.offsetWidth;q.classList.add("fade")}
 }
 function circle(){for(const [id,c] of [["ring","draw"],["num","pop"]]){const el=$(id);el.classList.remove(c);el.getBoundingClientRect();el.classList.add(c)}}
@@ -163,10 +163,15 @@ function next(){qi++;renderQuip(true);circle()}
 
 const last={};
 function setTile(k,v,n){const el=$("t-"+k);if(last[k]!==v){last[k]=v;el.querySelector("span").textContent=v;el.classList.remove("flip");void el.offsetWidth;el.classList.add("flip")}$("l-"+k).textContent=pl(n,F[k])}
-let celebrated=false;
+let celebrated=false,dayMode=false;
 function tick(){
-  const diff=TARGET-new Date();
-  if(diff<=0){$("app").classList.add("is-done");if(!celebrated){celebrated=true;confetti(220);renderQuip()}return}
+  const now=new Date();
+  if(now>=CLOSE){$("done").textContent="Birališta su zatvorena. Hvala svima koji su zaokružili 3.";$("eyebrow").textContent="Izbori su završeni";$("date").innerHTML="Nedjelja, <span>8.11.2026.</span> Birališta su zatvorena u 20:00.";$("app").classList.add("is-done");if(!celebrated){celebrated=true;confetti(220);renderQuip()}return}
+  let diff=TARGET-now;
+  if(diff<=0){
+    diff=CLOSE-now;
+    if(!dayMode){dayMode=true;$("eyebrow").textContent="Birališta su otvorena · do zatvaranja još";$("date").innerHTML="Danas, <span>8.11.2026.</span> Glasajte do 20:00. Zaokružite 3.";confetti(180);renderQuip(true);circle()}
+  }
   const s=Math.floor(diff/1000),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),se=s%60;
   setTile("d",String(d),d);setTile("h",String(h).padStart(2,"0"),h);setTile("m",String(m).padStart(2,"0"),m);setTile("s",String(se).padStart(2,"0"),se);
 }
